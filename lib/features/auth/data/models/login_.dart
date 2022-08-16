@@ -6,7 +6,7 @@ class LoginModel extends LoginEntiry{
     required super.password
   });
 
-  factory LoginModel.todoCreator(Map<String, dynamic> map) => LoginModel(
+  factory LoginModel.fromJSON(Map<String, dynamic> map) => LoginModel(
     user: map['user'],
     password: map['password'],
   );
@@ -16,3 +16,9 @@ class LoginModel extends LoginEntiry{
     'password': password,
   });
 }
+
+// typedef JSONSupport<T> = dynamic Function(Map<String, dynamic>);
+
+// abstract class JSONSupport<T> {
+//   factory T.fromJSON(Map<String, dynamic> map);
+// }
