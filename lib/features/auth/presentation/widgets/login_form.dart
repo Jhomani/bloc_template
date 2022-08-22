@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:template/features/auth/presentation/bloc/login_bloc.dart';
+import 'package:template/features/auth/presentation/bloc/login_events.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -11,7 +13,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
-  final controller = TextEditingController();
+  final controller = TextEditingController(text: "hello");
   String inputStr = '';
 
   @override
@@ -36,11 +38,12 @@ class LoginFormState extends State<LoginForm> {
         Row(
           children: <Widget>[
             Expanded(
-              child: RaisedButton(
-                color: Theme.of(context).colorScheme.secondary,
-                textTheme: ButtonTextTheme.primary,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.brown
+                ),
                 onPressed: dispatchConcrete,
-                child: const Text('Search'),
+                child: const Text('Log In'),
               ),
             ),
           ],
@@ -48,7 +51,7 @@ class LoginFormState extends State<LoginForm> {
         Row(
           children: <Widget>[
             Expanded(
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -62,8 +65,10 @@ class LoginFormState extends State<LoginForm> {
   }
 
   void dispatchConcrete() {
+    LoginAction action = LoginAction(user: inputStr, password: "test"); 
+
+    context.read<LoginBloc>().add(action);
+
     controller.clear();
-    // BlocProvider.of<NumberTriviaBloc>(context)
-    //     .add(GetTriviaForConcreteNumber(inputStr));
   }
 }

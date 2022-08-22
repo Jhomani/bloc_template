@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import './request.dart';
 
 class Todo {
@@ -97,7 +95,7 @@ Future<bool> hasConnection() async {
 
 
 void main() async {
-  var request2 = ClientRequest(endpoint: '/posts', creator: LoginModel.fromJSON); 
+  var request2 = ClientRequest<Todo>(endpoint: '/posts', creator: todoCreator); 
   // request2.creator = todoCreator;
   // request2.endpoint = '/todos';
 
@@ -107,7 +105,7 @@ void main() async {
 
   const data = {"title": "Tu eres la ostia","completed": false, "userId": 99};
 
-  Todo? createdTodo = await request2.post<Todo>(data); 
+  Todo? createdTodo = await request2.post(data); 
 
   // print(await hasConnection());
   print(createdTodo);

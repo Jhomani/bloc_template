@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-
+import 'dart:developer' as devtools show log;
 import './common_request.dart';
 
 typedef ItemCreator = dynamic Function(Map<String, dynamic>);
@@ -31,7 +31,7 @@ class ClientRequest extends CommonRequest {
         resp.add(parded); 
       }
     } on HttpException catch(e) {
-      print('HTTP Error, with ${e.message} code.');
+      devtools.log('HTTP Error, with ${e.message} code.');
     }
 
     return resp;
@@ -49,7 +49,7 @@ class ClientRequest extends CommonRequest {
 
       resp = creator(item);
     } on HttpException catch(e) {
-      print('HTTP Error, with ${e.message} code.');
+      devtools.log('HTTP Error, with ${e.message} code.');
     }
 
     return resp;
@@ -69,7 +69,7 @@ class ClientRequest extends CommonRequest {
 
       resp = creator(item);
     } on HttpException catch(e) {
-      print('HTTP Error, with ${e.message} code.');
+      devtools.log('HTTP Error, with ${e.message} code.');
     }
 
     return resp;

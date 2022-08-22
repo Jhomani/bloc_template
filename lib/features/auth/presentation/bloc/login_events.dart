@@ -1,8 +1,8 @@
-abstract class LoadAction {
-  const LoadAction();
+abstract class AuthAction {
+  const AuthAction();
 }
 
-class LoginAction implements LoadAction {
+class LoginAction implements AuthAction {
   final String user;
   final String password;
 

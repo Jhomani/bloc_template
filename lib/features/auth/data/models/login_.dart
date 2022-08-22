@@ -1,6 +1,6 @@
-import '../../domain/entities/login_entity.dart';
+import '../../domain/entities/login_entity.dart'; // @TODO: short this
 
-class LoginModel extends LoginEntiry{
+class LoginModel extends LoginEntiry {
   LoginModel({
     required super.user,
     required super.password
@@ -15,10 +15,7 @@ class LoginModel extends LoginEntiry{
     'user': user,
     'password': password,
   });
+
+  @override
+  String toString() => 'user: $user, password $password';
 }
-
-// typedef JSONSupport<T> = dynamic Function(Map<String, dynamic>);
-
-// abstract class JSONSupport<T> {
-//   factory T.fromJSON(Map<String, dynamic> map);
-// }

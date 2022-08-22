@@ -3,7 +3,7 @@ import 'dart:convert';
 
 typedef ItemCreator = dynamic Function(Map<String, dynamic>);
 
-class ClientRequest {
+class ClientRequest<T> {
   String endpoint = '/todos';
   final _domain = 'jsonplaceholder.typicode.com';
   final _query = {'_limit': '5', '_start': '5'};
@@ -14,15 +14,15 @@ class ClientRequest {
   static ClientRequest instance = ClientRequest._internal();
 
   factory ClientRequest({ItemCreator? creator, String? endpoint}) {
-    instance.creator = creator == null ? instance.creator : creator;
-    instance.endpoint = endpoint == null ? instance.endpoint : endpoint;
+    instance.creator = creator ?? instance.creator;
+    instance.endpoint = endpoint ?? instance.endpoint;
 
-    return instance; 
+    return instance as ClientRequest<T>; 
   }
 
   ClientRequest._internal();
 
-  Future<List<T>> find<T>() async {
+  Future<List<T>> find() async {
     List<T> resp = [];
 
     final uri = Uri.https(_domain, endpoint, _query);
@@ -42,7 +42,7 @@ class ClientRequest {
     return resp;
   } 
 
-  Future<T?> findById<T>(String id) async {
+  Future<T?> findById(String id) async {
     T? resp = null;
     endpoint += '/$id'; 
 
@@ -60,7 +60,7 @@ class ClientRequest {
     return resp;
   } 
 
-  Future<T?> post<T>(Object body) async {
+  Future<T?> post(Object body) async {
     T? resp;
 
     final uri = Uri.https(_domain, endpoint, _query);

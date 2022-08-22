@@ -1,89 +1,38 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:convert';
 import 'dart:io';
 
-import './events/login_events.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:template/features/auth/data/models/login_.dart';
+import 'package:template/features/auth/presentation/bloc/login_state.dart';
 
-enum PersonUrl {
-  persons1,
-  persons2,
-}
+import 'dart:developer' as devtools;
 
-Future<Iterable<Person>> getPersons(String url) => HttpClient()
-    .getUrl(Uri.parse(url))
-    .then((req) => req.close())
-    .then((resp) => resp.transform(utf8.decoder).join())
-    .then((str) => json.decode(str) as List<dynamic>)
-    .then((list) => list.map((e) => Person.fromJson(e)));
+import 'login_events.dart';
 
-extension UrlString on PersonUrl {
-  String get urlString {
-    switch (this) {
-      case PersonUrl.persons1:
-        return 'http://127.0.0.1:5500/api/persons1.json';
-      case PersonUrl.persons2:
-        return 'http://127.0.0.1:5500/api/persons2.json';
-    }
+class LoginBloc extends Bloc<AuthAction, LoginState?> {
+  bool errors = false;
+
+  LoginBloc() : super(null) {
+    on<LoginAction>(_initialLoginRequest);
   }
-}
 
-class Person {
-  final String name;
-  final int age;
+  void _initialLoginRequest(
+    LoginAction event,
+    Emitter<LoginState?> emit,
+  ) {
+    var login = LoginModel(
+      password: event.password,
+      user: event.user
+    );
 
-  const Person({
-    required this.name,
-    required this.age,
-  });
-
-  Person.fromJson(Map<String, dynamic> json)
-      : name = json['name'] as String,
-        age = json['age'] as int;
-
-  @override
-  String toString() => 'Person (name = $name, age = $age)';
-}
-
-class FetchResult {
-  final Iterable<Person> persons;
-  final bool isRetrievedFromCache;
-  const FetchResult({
-    required this.persons,
-    required this.isRetrievedFromCache,
-  });
+    // final username = Username.dirty(event.username);
+    emit(LoginState(login: login));
+  }
 
   @override
-  String toString() =>
-    'FetchResult (isRetrievedFromCache = $isRetrievedFromCache, persons = $persons)';
-}
+  void onChange(Change<LoginState?> change) {
+    super.onChange(change);
 
-
-class PersonsBloc extends Bloc<LoadAction, FetchResult?> {
-  final Map<PersonUrl, Iterable<Person>> _cache = {};
-
-  PersonsBloc() : super(null) {
-    on<LoginAction>((event, emit) async {
-      final url = event.user;
-
-      if (_cache.containsKey(url)) {
-        // we have the value in the cache
-        final cachedPersons = _cache[url]!;
-        final result = FetchResult(
-          persons: cachedPersons,
-          isRetrievedFromCache: true,
-        );
-
-        emit(result);
-      } else {
-        // final persons = await getPersons(url.urlString);
-        // _cache[url] = persons;
-        const result = FetchResult(
-          persons: [],
-          isRetrievedFromCache: false,
-        );
-
-        emit(result);
-      }
-    });
+    devtools.log(change.nextState.toString());
   }
 }
