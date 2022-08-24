@@ -14,21 +14,40 @@ class LoginForm extends StatefulWidget {
 
 class LoginFormState extends State<LoginForm> {
   final controller = TextEditingController(text: "hello");
-  String inputStr = '';
+
+  String username = '';
+  String passoword = '';
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        const SizedBox(height: 20),
         TextField(
           controller: controller,
-          keyboardType: TextInputType.number,
+          // keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'User Name',
+          ),
+          onChanged: (value) {
+            username = value;
+          },
+          onSubmitted: (_) {
+            dispatchConcrete();
+          },
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          // controller: controller,
+          // keyboardType: TextInputType.number,
+          obscureText: true,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Input a number',
           ),
           onChanged: (value) {
-            inputStr = value;
+            passoword = value;
           },
           onSubmitted: (_) {
             dispatchConcrete();
@@ -65,7 +84,7 @@ class LoginFormState extends State<LoginForm> {
   }
 
   void dispatchConcrete() {
-    LoginAction action = LoginAction(user: inputStr, password: "test"); 
+    LoginAction action = LoginAction(user: username, password: passoword); 
 
     context.read<LoginBloc>().add(action);
 

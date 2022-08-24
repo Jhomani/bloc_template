@@ -7,3 +7,13 @@ abstract class LoginEntiry {
     required this.password,
   });
 }
+
+abstract class TokenEntity {
+  final String token;
+  final String expire;
+
+  TokenEntity({
+    required this.token,
+    required this.expire,
+  });
+}

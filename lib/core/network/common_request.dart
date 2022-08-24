@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import './http_errors.dart';
 
 typedef ItemCreator = dynamic Function(Map<String, dynamic>);
 
@@ -21,8 +22,12 @@ class CommonRequest {
 
     httpClient.close();
 
-    if(respCode >= 400 && respCode < 500) {
+    if(respCode == 401) {
+      throw Unauthorized("You are not authorized to this action");
+    } if(respCode >= 400 && respCode < 500) {
       throw HttpException(respCode.toString());
+    } if(respCode >= 500 && respCode < 600)  {
+      throw InternalError(respCode.toString());
     }
 
     return dataParsed; 

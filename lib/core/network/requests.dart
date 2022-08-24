@@ -30,8 +30,8 @@ class ClientRequest extends CommonRequest {
         T parded = creator(item);
         resp.add(parded); 
       }
-    } on HttpException catch(e) {
-      devtools.log('HTTP Error, with ${e.message} code.');
+    } on SocketException {
+      devtools.log('The device not have internet cennection');
     }
 
     return resp;
@@ -48,8 +48,8 @@ class ClientRequest extends CommonRequest {
       Map<String, dynamic> item = await requestAnalizer(request);
 
       resp = creator(item);
-    } on HttpException catch(e) {
-      devtools.log('HTTP Error, with ${e.message} code.');
+    } on SocketException {
+      devtools.log('The device not have internet cennection');
     }
 
     return resp;
@@ -59,17 +59,18 @@ class ClientRequest extends CommonRequest {
     T? resp;
 
     final uri = Uri.https(domain, endpoint, query);
-    HttpClientRequest request = await httpClient.postUrl(uri);
-
-    request.headers.set("Content-Type", "application/json; charset=UTF-8");
-    request.write(json.encode(body));
 
     try {
+      HttpClientRequest request = await httpClient.postUrl(uri);
+
+      request.headers.set("Content-Type", "application/json; charset=UTF-8");
+      request.write(json.encode(body));
+
       Map<String, dynamic> item = await requestAnalizer(request);
 
       resp = creator(item);
-    } on HttpException catch(e) {
-      devtools.log('HTTP Error, with ${e.message} code.');
+    } on SocketException {
+      devtools.log('The device not have internet cennection');
     }
 
     return resp;
