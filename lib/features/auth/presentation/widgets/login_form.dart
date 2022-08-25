@@ -88,6 +88,16 @@ class LoginFormState extends State<LoginForm> {
 
     context.read<LoginBloc>().add(action);
 
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        const SnackBar(
+          content: Text('Authentication Failure'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color.fromARGB(255, 235, 49, 49)
+        ),
+      );
+
     controller.clear();
   }
 }

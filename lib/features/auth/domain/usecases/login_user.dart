@@ -1,19 +1,11 @@
-// class GetConcreteNumberTrivia implements UseCase<NumberTrivia, Params> {
-//   final NumberTriviaRepository repository;
+import 'package:template/features/auth/data/models/login_.dart';
+import 'package:template/features/auth/data/models/token.dart';
+import 'package:template/features/auth/data/repositories/login_repository.dart';
 
-//   GetConcreteNumberTrivia(this.repository);
+class LoginUserCase  {
+  final LoginRepository repository = LoginRepository();
 
-//   @override
-//   Future<Either<Failure, NumberTrivia>> call(Params params) async {
-//     return await repository.getConcreteNumberTrivia(params.number);
-//   }
-// }
-
-// class Params extends Equatable {
-//   final int number;
-
-//   Params({required this.number});
-
-//   @override
-//   List<Object> get props => [number];
-// }
+  Future<TokenModel?> call(LoginModel credentials) async {
+    return await repository.login(credentials);
+  }
+}

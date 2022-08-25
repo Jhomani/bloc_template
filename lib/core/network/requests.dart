@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-import 'dart:developer' as devtools show log;
+import 'dart:developer' as devtools;
 import './common_request.dart';
 
 typedef ItemCreator = dynamic Function(Map<String, dynamic>);
