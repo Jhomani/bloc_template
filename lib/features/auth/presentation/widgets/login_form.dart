@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:template/features/auth/presentation/bloc/login_bloc.dart';
@@ -86,17 +87,27 @@ class LoginFormState extends State<LoginForm> {
   void dispatchConcrete() {
     LoginAction action = LoginAction(user: username, password: passoword); 
 
-    context.read<LoginBloc>().add(action);
+    // context.read<LoginBloc>().add(action);
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          content: Text('Authentication Failure'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color.fromARGB(255, 235, 49, 49)
-        ),
-      );
+    // ScaffoldMessenger.of(context)
+    //   ..hideCurrentSnackBar()
+    //   ..showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Authentication Failure'),
+    //       duration: Duration(seconds: 2),
+    //       backgroundColor: Color.fromARGB(255, 235, 49, 49)
+    //     ),
+    //   );
+
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 10,
+          channelKey: 'basic_channel',
+          title: username,
+          body: 'Simple body'
+      )
+    );
+
 
     controller.clear();
   }
