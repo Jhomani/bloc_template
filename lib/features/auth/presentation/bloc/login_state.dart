@@ -1,41 +1,25 @@
-import '../../data/models/login_.dart';
+part of 'login_bloc.dart';
 
-// class LoginState {
-//   bool loading = false;
-//   LoginModel login;
-//   String? error;
+abstract class LoginState { }
 
-//   LoginState({
-//     required this.login,
-//   });
+class Authenticated extends LoginState {
+  @override
+  List<Object> get props => [];
+}
 
-//   @override
-//   String toString() => '[Login]: $login';
-// }
+class Unauthenticated extends LoginState {
+  @override
+  List<Object> get props => [];
+}
 
-class LoginState {}
+class Loading extends LoginState {
+  bool active = false;
 
-class Credencials extends LoginState{
-  final LoginModel login;
-
-  Credencials({
-    required this.login,
-  });
+  Loading(this.active);
 }
 
 class AuthError extends LoginState {
   final String message;
 
-  AuthError({
-    required this.message,
-  });
+  AuthError(this.message);
 }
-
-class Loading extends LoginState {
-  final bool status;
-
-  Loading({
-    required this.status,
-  });
-}
-

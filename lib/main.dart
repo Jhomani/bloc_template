@@ -1,105 +1,60 @@
 import 'package:flutter/material.dart';
-import 'routes/interface.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'dart:developer' as devtools;
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/core/injections/bloc_injection.dart';
+import 'package:template/core/widgets/modal_widget.dart';
+import 'head/presentation/bloc/global_bloc.dart';
+import 'routes/crossing.dart';
+import 'setup/notification_setup.dart';
 
-void initNotification() {
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(
-          channelGroupKey: 'basic_channel_group',
-          channelKey: 'basic_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
-          defaultColor: const Color(0xFF9D50DD),
-          ledColor: Colors.white)
-    ],
-    // Channel groups are only visual and are not required
-    channelGroups: [
-      NotificationChannelGroup(
-          channelGroupkey: 'basic_channel_group',
-          channelGroupName: 'Basic group')
-    ],
-    debug: true
-  );
-}
-
-
-Future<void> initFirebase () async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(
-          channelGroupKey: 'basic_channel_group',
-          channelKey: 'basic_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
-          defaultColor: const Color(0xFF9D50DD),
-          ledColor: Colors.white)
-    ],
-    // Channel groups are only visual and are not required
-    channelGroups: [
-      NotificationChannelGroup(
-          channelGroupkey: 'basic_channel_group',
-          channelGroupName: 'Basic group')
-    ],
-    debug: true
-  );
-
-  AwesomeNotifications().createNotification(
-    content: NotificationContent(
-        id: 10,
-        channelKey: 'basic_channel',
-        title: 'From Backgroup Notification',
-        body: 'Simple body'
-    )
-  );
-
-  devtools.log("Handling a background message: ${message.messageId}");
-}
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  await initFirebase();
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // String? token = await messaging.getToken();
+  // devtools.log('TOKEN: $token');
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   devtools.log('Got a message whilst in the foreground!');
+  //   devtools.log('Message data: ${message.data}');
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   if (message.notification != null) {
+  //     devtools.log('Message also contained a notification: ${message.notification}');
+  //   }
+  // });
 
-  String? token = await messaging.getToken();
-  devtools.log('TOKEN: $token');
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDependencies();
 
   initNotification();
 
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    devtools.log('Got a message whilst in the foreground!');
-    devtools.log('Message data: ${message.data}');
-
-    if (message.notification != null) {
-      devtools.log('Message also contained a notification: ${message.notification}');
-    }
-  });
-
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<GlobalBloc>(
+          create: (context) => GetIt.instance<GlobalBloc>(),
+        ),
+      ],
+      child: const MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Navigation example',
-      onGenerateRoute: routesGenerator,
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    navigatorKey: navigatorKey,
+    title: 'Navigation example',
+    onGenerateRoute: routesGenerator,
+    builder: (context, child) => Stack(
+      children: [
+        child!,
+        Modal()
+      ]
+    ), 
+    initialRoute: '/login',
+  );
 }

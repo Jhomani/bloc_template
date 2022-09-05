@@ -16,8 +16,8 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
     Widget child
   ) {
     if (path == '/') return child;
-    // Fades between routes. (If you don't want any animation, 
-    // just return child.)
+
+    // Fades between routes: (for any animation, just return child)
     return FadeTransition(opacity: animation, child: child);
   }
 }

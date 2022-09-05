@@ -1,41 +1,44 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template/features/auth/data/models/login_.dart';
-import 'package:template/features/auth/domain/usecases/login_user.dart';
-import 'package:template/features/auth/presentation/bloc/login_state.dart';
-
+import 'package:template/core/network/http_errors.dart';
+import 'package:template/features/auth/data/models/credentials_model.dart';
 import 'dart:developer' as devtools;
 
-import 'login_events.dart';
+import 'package:template/features/auth/domain/usecases/login_usecase.dart';
+import 'package:template/main.dart';
 
-class LoginBloc extends Bloc<AuthAction, LoginState> {
-  LoginUserCase login;
+part 'login_event.dart';
+part 'login_state.dart';
 
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final LoginUseCase doSignInUseCase;
+  
   LoginBloc({
-    required this.login
-  }) : super(LoginState()) {
-    on<LoginAction>(_initialLoginRequest);
+    required this.doSignInUseCase
+  }) : super(Loading(false)) {
+    on<SignInRequested>(_handleLoginUser);
   }
-
-  void _initialLoginRequest(
-    LoginAction event,
+  
+  Future<void> _handleLoginUser(
+    SignInRequested event,
     Emitter<LoginState> emit,
   ) async {
-    LoginModel credentials = LoginModel(
-      password: event.password,
-      user: event.user
-    );
+    emit(Loading(true));
 
-    var tokemModel = await login(credentials);
+    try{
+      await doSignInUseCase(CredentialModel(
+        password: event.loginParams.email,
+        email: event.loginParams.password
+      ));
 
-    devtools.log(tokemModel?.token ?? "");
-
-    emit(AuthError(message: "You are bad guy!!!"));
-  }
-
-  @override
-  void onChange(Change<LoginState> change) {
-    super.onChange(change);
-
-    devtools.log(change.nextState.toString());
+      await navigatorKey.currentState?.pushReplacementNamed('/home');
+    } on Unauthorized {
+      emit(AuthError("Credenciales Incorrectas."));
+    } on EntityNotFound {
+      emit(AuthError("Credenciales Incorrectas."));
+    } catch(error) {
+      devtools.log(error.toString());
+    } finally {
+      emit(Loading(false));
+    }
   }
 }
