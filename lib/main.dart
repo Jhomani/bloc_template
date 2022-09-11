@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
     builder: (context, child) => Stack(
       children: [
         child!,
-        Modal()
+        // const Modal()
       ]
     ), 
     initialRoute: '/login',

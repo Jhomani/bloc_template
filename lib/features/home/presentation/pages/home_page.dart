@@ -1,11 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:developer' as devtools;
 
 class MyHomePage extends StatefulWidget {
 
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -58,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               TextButton(
                 // focusNode: node,
                 onPressed: () { devtools.log("Button Pressed");},
-                child: Text("Hello Word"),
+                child: const Text("Hello Word"),
               )
             ],
           ),

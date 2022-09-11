@@ -18,16 +18,22 @@ class _ModalState extends State<Modal>  {
 
   Future<void> _onBuiled() => Future.delayed(
     const Duration(milliseconds: 1),
-    () {
-      devtools.log('Stated Chaed!!!!!!');
-
-      if(builds == 0) setState(() => builds = 1);
-    }
+    () {setState(() => builds = 1);}
   );
+
+  double _getFreeSpaceFactor(double screenSize, double boxSize) {
+    final freeSpace = screenSize - boxSize;
+    final resp = (2/freeSpace) * boxSize;
+
+    return resp + 1;
+  }
 
   @override
   Widget build(BuildContext context) {
-    // return const SizedBox.shrink();
+    double box = 400;
+
+    double height = MediaQuery.of(context).size.height;
+    double positionFactor = _getFreeSpaceFactor(height, box);
 
     if(builds == 0) _onBuiled();
 
@@ -45,20 +51,19 @@ class _ModalState extends State<Modal>  {
       child: GestureDetector(
         onTap: () {
           devtools.log("On Tag Modal");
-
             setState(() {
-              if(builds == 1) builds = 2;
-              else builds = 1;
+              builds = builds == 1 ? 2 : 1;
             });
         } ,
         child: Container(
-          color: const Color(0x15000000),
+          color: const Color(0x30000000),
         ),
       ),
     ),
      AnimatedAlign(
-        alignment: builds == 1 ? const Alignment(0, 1) : const Alignment(0, 3),
-        // alignment: Alignment(0, 3),
+        alignment: builds == 1
+          ? const Alignment(0, 1) 
+          : Alignment(0, positionFactor),
         duration: const Duration(milliseconds: 700),
         curve: Curves.fastOutSlowIn,
         child: ClipRRect(
@@ -67,7 +72,7 @@ class _ModalState extends State<Modal>  {
           ),
           child: Container(
             width: double.infinity,
-            height: 300,
+            height: box,
             color: Colors.white,
           ),
         ),

@@ -10,8 +10,6 @@ import 'package:template/features/auth/domain/usecases/login_usecase.dart';
 import 'package:template/features/auth/presentation/bloc/login_bloc.dart';
 import 'package:template/head/presentation/bloc/global_bloc.dart';
 
-
-
 final injector = GetIt.instance;
 
 Future<void> initializeDependencies() async{

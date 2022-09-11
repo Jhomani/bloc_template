@@ -37,7 +37,9 @@ class _SignInPageState extends State<SignInPage> {
                   if(loading.active) {
                     stateView = Container(
                       color: Colors.black.withOpacity(0.5),
-                      child: const Center(child: CircularProgressIndicator(color: Colors.white)),
+                      child: const Center(
+                        child: CircularProgressIndicator(color: Colors.white)
+                      ),
                     );
                   }
 

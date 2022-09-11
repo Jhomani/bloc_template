@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../features/auth/presentation/pages/sign_in_page.dart';
-import '../features/home/presentation/pages/pages.dart';
 import 'middleware.dart';
 
 typedef RouteBuilder = Widget Function(BuildContext);
@@ -11,7 +10,7 @@ Route<dynamic>? routesGenerator(RouteSettings settings) {
 
   Map<String, RouteBuilder> routes = {
     '/login': (context) => const SignInPage(),
-    '/': (context) => MyHomePage(),
+    // '/': (context) => MyHomePage(),
   };
 
   if(routes.containsKey(settings.name)) {
