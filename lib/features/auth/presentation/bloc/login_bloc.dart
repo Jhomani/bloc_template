@@ -4,7 +4,7 @@ import 'package:template/features/auth/data/models/credentials_model.dart';
 import 'dart:developer' as devtools;
 
 import 'package:template/features/auth/domain/usecases/login_usecase.dart';
-import 'package:template/main.dart';
+import 'package:template/app.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

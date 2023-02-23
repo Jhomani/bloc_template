@@ -17,7 +17,6 @@ Future<void> _firebaseMessagingBackground(RemoteMessage message) async {
         body: 'Simple body'
     )
   );
-
 }
 
 

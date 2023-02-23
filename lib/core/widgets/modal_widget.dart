@@ -5,7 +5,6 @@ import 'dart:developer' as devtools;
 import 'package:flutter/services.dart';
 
 class Modal extends StatefulWidget {
-
   const Modal({Key? key}) : super(key: key);
 
   @override
