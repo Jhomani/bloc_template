@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:template/core/utils/logger.dart';
 import 'package:template/routes/crossing.dart';
@@ -20,7 +18,7 @@ class App extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    Timer? timer = null;
+    // Timer? timer = null;
 
     return MaterialApp(
       navigatorKey: navigatorKey,

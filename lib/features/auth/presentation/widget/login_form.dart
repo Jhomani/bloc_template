@@ -39,7 +39,7 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  void _doLogin(){
+  // void _doLogin() {
     // navigatorKey.currentState?.pushNamed('/');
     // blocContext.read<LoginBloc>().add(
     //   SignInRequested(
@@ -49,5 +49,5 @@ class LoginForm extends StatelessWidget {
     //     )
     //   )
     // );
-  }
+  // }
 }

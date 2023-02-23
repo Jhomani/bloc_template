@@ -4,19 +4,16 @@ import 'package:get_it/get_it.dart';
 import 'package:template/core/utils/app_setting_util.dart';
 import 'package:template/core/utils/logger.dart';
 import 'package:template/core/widgets/basic_scroll.dart';
-import 'package:template/core/widgets/grid/grid.dart';
 import 'package:template/core/widgets/typography_widget.dart';
 import 'package:template/features/auth/presentation/bloc/login_bloc.dart';
 import 'package:template/features/auth/presentation/widget/login_container.dart';
 import 'package:template/settings/palette_setting.dart';
-
 
 class LoginPage extends StatelessWidget {
 
   LoginPage({super.key}) {
     updateStatusBar(color: const Color(0x00000000));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +39,7 @@ class LoginPage extends StatelessWidget {
           ),
           child: BasicScroll(
             gap: 20,
+            crossAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: 80,
@@ -53,13 +51,14 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 constraints: BoxConstraints(
-                  maxWidth: 380,
+                  maxWidth: 420,
                   minHeight: height - 80 - 20,
                 ),
                 decoration: BoxDecoration(
                   color: SwColors.secondary,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   )
