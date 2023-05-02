@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/core/utils/logger.dart';
+import 'package:template/core/widgets/modal_widget.dart';
 import 'package:template/routes/crossing.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -41,7 +42,8 @@ class App extends StatelessWidget {
 
         return Stack(
           children: [
-            Material(child: child)
+            child as Widget,
+            // Modal(),
           ]
         );
       }, 

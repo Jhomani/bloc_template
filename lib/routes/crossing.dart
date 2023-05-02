@@ -15,7 +15,7 @@ Route<dynamic>? routesGenerator(RouteSettings settings) {
   };
 
   if(routes.containsKey(settings.name)) {
-    String path = settings.name!;
+    String path = settings.name as String;
 
     response =  MyCustomRoute(
       builder: routes[path]!,

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class TypographyBase extends StatelessWidget {
+class _TypographyBase extends StatelessWidget {
   final String text;
   final Color? color;
   final TextAlign? textAlign;
@@ -10,7 +10,7 @@ class TypographyBase extends StatelessWidget {
   final double? lineHeight;
   final double fontSize;
 
-  const TypographyBase({
+  const _TypographyBase({
     super.key,
     required this.text,
     this.color = const Color(0xDD000000),
@@ -37,8 +37,7 @@ class TypographyBase extends StatelessWidget {
   ); 
 }
 
-class SwTypography extends TypographyBase {
-
+class SwTypography extends _TypographyBase {
   const SwTypography({
     super.key,
     required super.text,
@@ -112,37 +111,37 @@ class SwTypography extends TypographyBase {
   }) => SwTypography(
     text: text,
     fontSize: 17,
-    lineHeight: 26,
+    lineHeight: 1.529,
     color: color,
     weight: FontWeight.w600,
   );
 
-  factory SwTypography.subTitleOne({
-    required String text,
-    Color? color,
-  }) => SwTypography(
+  factory SwTypography.subTitleOne(
+    String text,
+    {Color? color}
+  ) => SwTypography(
     text: text,
     fontSize: 16,
-    lineHeight: 28,
+    lineHeight: 1.75,
     color: color,
     weight: FontWeight.w600,
   );
 
-  factory SwTypography.subTitleTwo({
-    required String text,
-    Color? color,
-  }) => SwTypography(
+  factory SwTypography.subTitleTwo(
+    String text,
+    {Color? color}
+  ) => SwTypography(
     text: text,
     fontSize: 14,
-    lineHeight: 26,
+    lineHeight: 1.857,
     color: color,
     weight: FontWeight.w600,
   );
 
-  factory SwTypography.subTitleTree({
-    required String text,
-    Color? color,
-  }) => SwTypography(
+  factory SwTypography.subTitleTree(
+    String text,
+    {Color? color}
+  ) => SwTypography(
     text: text,
     fontSize: 13,
     lineHeight: 24,
@@ -150,10 +149,10 @@ class SwTypography extends TypographyBase {
     weight: FontWeight.w600,
   );
 
-  factory SwTypography.bodyOne({
-    required String text,
-    Color? color,
-  }) => SwTypography(
+  factory SwTypography.bodyOne(
+    String text,
+    {Color? color}
+  ) => SwTypography(
     text: text,
     fontSize: 16,
     lineHeight: 28,
@@ -161,15 +160,37 @@ class SwTypography extends TypographyBase {
     weight: FontWeight.normal,
   );
 
-  factory SwTypography.bodyTwo({
-    required String text,
-    Color? color,
-  }) => SwTypography(
+  factory SwTypography.bodyTwo(
+    String text,
+    {Color? color}
+  ) => SwTypography(
     text: text,
     fontSize: 14,
-    lineHeight: 26,
+    lineHeight: 1.857,
     color: color,
     weight: FontWeight.normal,
+  );
+
+  factory SwTypography.buttonLarge(
+    String text,
+    {Color? color}
+  ) => SwTypography(
+    text: text,
+    fontSize: 15,
+    lineHeight: 1.733,
+    color: color,
+    weight: FontWeight.w600,
+  );
+
+  factory SwTypography.buttonMedium(
+    String text,
+    {Color? color}
+  ) => SwTypography(
+    text: text,
+    fontSize: 14,
+    lineHeight: 1.714,
+    color: color,
+    weight: FontWeight.w600,
   );
 
   factory SwTypography.bodyThree({

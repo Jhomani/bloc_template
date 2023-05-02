@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:template/core/widgets/grid/sw_column.dart';
-import 'validator_domain.dart';
+import 'validator_models.dart';
 
 bool emailValid(String email) {
   bool resp = false;

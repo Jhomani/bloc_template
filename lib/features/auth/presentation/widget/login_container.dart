@@ -14,9 +14,9 @@ class _LoginContainerState extends State<LoginContainer> {
   @override
   Widget build(BuildContext context){
     return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (_, state) => state is Loading,
-      builder: (BuildContext context, state) {
-        return LoginForm(blocContext: context);
+      buildWhen: (prev, next) => next is Loading,
+      builder: (context, state) {
+        return LoginForm();
       },
     );
   }
